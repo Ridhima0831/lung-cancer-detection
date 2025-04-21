@@ -6,7 +6,13 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import img_to_array
 
 # Load your model
-model = load_model('models/lung_cancer_model.h5')  # Make sure path is correct
+import requests
+model_path = 'lung_cancer_model.h5'
+if not os.path.exists(model_path):
+    url = 'https://download-link-to-your-model'
+    with open(model_path, 'wb') as f:
+        f.write(requests.get(url).content)
+model = load_model(model_path)
 
 # Page config
 st.set_page_config(page_title="Lung Cancer Detection", layout="centered")
